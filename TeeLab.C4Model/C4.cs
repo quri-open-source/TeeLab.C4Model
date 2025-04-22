@@ -34,6 +34,8 @@ public class C4
     {
         var context = new ContextDiagram(this);
         
+        var container = new ContainerDiagram(context, this);
+        
         Project.PutWorkspace(WorkspaceId, Workspace);
     }
     
