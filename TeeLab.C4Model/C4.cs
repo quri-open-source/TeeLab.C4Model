@@ -32,7 +32,7 @@ public class C4
 
     public void Generate()
     {
-        
+        var context = new ContextDiagram(this);
         
         Project.PutWorkspace(WorkspaceId, Workspace);
     }
