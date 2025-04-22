@@ -1,3 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using TeeLab.C4Model;
 
-Console.WriteLine("Hello, World!");
+void Main()
+{
+    var c4Model = new C4();
+    c4Model.Generate();
+}
+
+Main();
