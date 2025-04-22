@@ -1,5 +1,6 @@
 using Structurizr;
 using Structurizr.Api;
+using TeeLab.C4Model.Components;
 
 namespace TeeLab.C4Model;
 
@@ -33,8 +34,24 @@ public class C4
     public void Generate()
     {
         var context = new ContextDiagram(this);
-        
+        context.Generate();
         var container = new ContainerDiagram(context, this);
+        container.Generate();
+        
+        var api = new ApiComponent(context, container, this);
+        api.Generate();
+        var orderProcessing = new OrderProcessing(context, container, this);
+        orderProcessing.Generate();
+        var designStudio = new DesignStudio(context, container, this);
+        designStudio.Generate();
+        var paymentGateway = new PaymentGateway(context, container, this);
+        paymentGateway.Generate();
+        var orderFulfillment = new OrderFulfillment(context, container, this);
+        orderFulfillment.Generate();
+        var productCatalog = new ProductCatalog(context, container, this);
+        productCatalog.Generate();
+        var userManagement = new UserManagement(context, container, this);
+        userManagement.Generate();
         
         Project.PutWorkspace(WorkspaceId, Workspace);
     }
