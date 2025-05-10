@@ -17,6 +17,8 @@ public class ContainerDiagram
     public Container OrderFulfillment { get; set; }
     public Container ProductCatalog { get; set; }
     public Container UserManagement { get; set; }
+    
+    public Container SinglePageApplication { get; set; }
 
     
     public ContainerDiagram(ContextDiagram context, C4 project)
@@ -43,6 +45,10 @@ public class ContainerDiagram
         ProductCatalog.AddTags(nameof(ProductCatalog));
         UserManagement = Context.TeeLab.AddContainer("User Management", "Handles user management and authentication.", "Spring Boot - Java 24");
         UserManagement.AddTags(nameof(UserManagement));
+        
+        SinglePageApplication = Context.TeeLab.AddContainer("Single Page Application", "Provides core functionality via the browser.", "Angular 19, NGX-Translate, Angular Material");
+        SinglePageApplication.AddTags(nameof(SinglePageApplication));
+
     }
 
     public void Generate()
@@ -53,9 +59,12 @@ public class ContainerDiagram
         
         Api.Uses(Context.Cloudinary, "Use Cloudinary to create a cloud service to manage images.");
         Api.Uses(Context.Stripe, "Use Stripe to create a cloud service to manage payments.");
+        Api.Uses(Context.Supabase, "Use Supabase to create a cloud service to manage data.");
         
         LandingPage.Uses(WebApp, "Redirect to the web app.");
-        WebApp.Uses(Api, "Use the API to manage the data.");
+        WebApp.Uses(SinglePageApplication , "Use the SPA to manage the data.");
+        SinglePageApplication.Uses(Api, "Use the API to manage the data.");
+        
         
         ApplyStyles();
         Publish();
@@ -68,6 +77,8 @@ public class ContainerDiagram
         styles.Add(new ElementStyle(nameof(LandingPage)) {Background = "#006A1C", Shape = Shape.RoundedBox, Color = "#FFFFFF"});
         styles.Add(new ElementStyle(nameof(WebApp)) {Background = "#0000E4", Shape = Shape.RoundedBox, Color = "#FFFFFF"});
         styles.Add(new ElementStyle(nameof(Api)) {Background = "#FF0D17", Shape = Shape.RoundedBox, Color = "#FFFFFF"});
+        styles.Add(new ElementStyle(nameof(SinglePageApplication)) { Background = "#438dd5", Shape = Shape.WebBrowser, Color = "#FFFFFF" });
+
     }
     
     private void Publish()
@@ -78,5 +89,6 @@ public class ContainerDiagram
         view.Add(LandingPage);
         view.Add(WebApp);
         view.Add(Api);
+        view.Add(SinglePageApplication);
     }
 }
