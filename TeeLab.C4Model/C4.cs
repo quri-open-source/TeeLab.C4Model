@@ -19,9 +19,9 @@ public class C4
     
     public C4()
     {
-        ApiKey = "f9f9ec3d-ce88-4c21-ba44-1dc7877243d4";
-        ApiSecret = "57e7eac0-da22-4b4d-b090-3cd86a3b2677";
-        WorkspaceId = 101506;
+        ApiKey = "11ea81a8-3df5-4acb-be96-abf095b90ab4";
+        ApiSecret = "ae695afa-e9a8-47f2-a83d-ad9e6cf32a4d";
+        WorkspaceId = 102252;
         WorkspaceName = "TeeLab - Open Source";
         WorkspaceDescription = "TeeLav - C4 Model";
 
