@@ -12,7 +12,7 @@ public class ContainerDiagram
     public Container Api { get; set; }
     
     public Container OrderProcessing { get; set; }
-    public Container DesignStudio { get; set; }
+    public Container DesignLab { get; set; }
     public Container PaymentGateway { get; set; }
     public Container OrderFulfillment { get; set; }
     public Container ProductCatalog { get; set; }
@@ -35,8 +35,8 @@ public class ContainerDiagram
         
         OrderProcessing = Context.TeeLab.AddContainer("Order Processing", "Handles order processing and management.", "Spring Boot - Java 24");
         OrderProcessing.AddTags(nameof(OrderProcessing));
-        DesignStudio = Context.TeeLab.AddContainer("Design Studio", "Handles design studio and management.", "Spring Boot - Java 24");
-        DesignStudio.AddTags(nameof(DesignStudio));
+        DesignLab = Context.TeeLab.AddContainer("Design Lab", "Handles design studio and management.", "Spring Boot - Java 24");
+        DesignLab.AddTags(nameof(DesignLab));
         PaymentGateway = Context.TeeLab.AddContainer("Payment Gateway", "Handles payment processing and management.", "Spring Boot - Java 24");
         PaymentGateway.AddTags(nameof(PaymentGateway));
         OrderFulfillment = Context.TeeLab.AddContainer("Order Fulfillment", "Handles order fulfillment and management.", "Spring Boot - Java 24");
