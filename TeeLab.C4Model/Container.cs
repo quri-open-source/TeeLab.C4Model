@@ -64,6 +64,7 @@ public class ContainerDiagram
         LandingPage.Uses(WebApp, "Redirect to the web app.");
         WebApp.Uses(SinglePageApplication , "Use the SPA to manage the data.");
         SinglePageApplication.Uses(Api, "Use the API to manage the data.");
+        SinglePageApplication.Uses(Context.Supabase, "Use Supabase to manage the data.");
         
         
         ApplyStyles();
