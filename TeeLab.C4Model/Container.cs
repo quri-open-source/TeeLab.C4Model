@@ -12,11 +12,13 @@ public class ContainerDiagram
     public Container Api { get; set; }
     
     public Container OrderProcessing { get; set; }
-    public Container DesignStudio { get; set; }
+    public Container DesignLab { get; set; }
     public Container PaymentGateway { get; set; }
     public Container OrderFulfillment { get; set; }
     public Container ProductCatalog { get; set; }
     public Container UserManagement { get; set; }
+    
+    public Container SinglePageApplication { get; set; }
 
     
     public ContainerDiagram(ContextDiagram context, C4 project)
@@ -33,8 +35,8 @@ public class ContainerDiagram
         
         OrderProcessing = Context.TeeLab.AddContainer("Order Processing", "Handles order processing and management.", "Spring Boot - Java 24");
         OrderProcessing.AddTags(nameof(OrderProcessing));
-        DesignStudio = Context.TeeLab.AddContainer("Design Studio", "Handles design studio and management.", "Spring Boot - Java 24");
-        DesignStudio.AddTags(nameof(DesignStudio));
+        DesignLab = Context.TeeLab.AddContainer("Design Lab", "Handles design studio and management.", "Spring Boot - Java 24");
+        DesignLab.AddTags(nameof(DesignLab));
         PaymentGateway = Context.TeeLab.AddContainer("Payment Gateway", "Handles payment processing and management.", "Spring Boot - Java 24");
         PaymentGateway.AddTags(nameof(PaymentGateway));
         OrderFulfillment = Context.TeeLab.AddContainer("Order Fulfillment", "Handles order fulfillment and management.", "Spring Boot - Java 24");
@@ -43,6 +45,10 @@ public class ContainerDiagram
         ProductCatalog.AddTags(nameof(ProductCatalog));
         UserManagement = Context.TeeLab.AddContainer("User Management", "Handles user management and authentication.", "Spring Boot - Java 24");
         UserManagement.AddTags(nameof(UserManagement));
+        
+        SinglePageApplication = Context.TeeLab.AddContainer("Single Page Application", "Provides core functionality via the browser.", "Angular 19, NGX-Translate, Angular Material");
+        SinglePageApplication.AddTags(nameof(SinglePageApplication));
+
     }
 
     public void Generate()
@@ -53,9 +59,13 @@ public class ContainerDiagram
         
         Api.Uses(Context.Cloudinary, "Use Cloudinary to create a cloud service to manage images.");
         Api.Uses(Context.Stripe, "Use Stripe to create a cloud service to manage payments.");
+        Api.Uses(Context.Supabase, "Use Supabase to create a cloud service to manage data.");
         
         LandingPage.Uses(WebApp, "Redirect to the web app.");
-        WebApp.Uses(Api, "Use the API to manage the data.");
+        WebApp.Uses(SinglePageApplication , "Use the SPA to manage the data.");
+        SinglePageApplication.Uses(Api, "Use the API to manage the data.");
+        SinglePageApplication.Uses(Context.Cloudinary, "Use Cloudinary to manage images.");
+        
         
         ApplyStyles();
         Publish();
@@ -68,6 +78,8 @@ public class ContainerDiagram
         styles.Add(new ElementStyle(nameof(LandingPage)) {Background = "#006A1C", Shape = Shape.RoundedBox, Color = "#FFFFFF"});
         styles.Add(new ElementStyle(nameof(WebApp)) {Background = "#0000E4", Shape = Shape.RoundedBox, Color = "#FFFFFF"});
         styles.Add(new ElementStyle(nameof(Api)) {Background = "#FF0D17", Shape = Shape.RoundedBox, Color = "#FFFFFF"});
+        styles.Add(new ElementStyle(nameof(SinglePageApplication)) { Background = "#438dd5", Shape = Shape.WebBrowser, Color = "#FFFFFF" });
+
     }
     
     private void Publish()
@@ -78,5 +90,6 @@ public class ContainerDiagram
         view.Add(LandingPage);
         view.Add(WebApp);
         view.Add(Api);
+        view.Add(SinglePageApplication);
     }
 }
