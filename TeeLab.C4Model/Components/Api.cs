@@ -10,7 +10,6 @@ public class ApiComponent
     private ContainerDiagram Container { get; }
 
     public Component DesignLab { get; set; }
-    public Component BlueprintManagement { get; set; }
     public Component ProductCatalog { get; set; }
     public Component OrderProcessing { get; set; }
     public Component OrderFulfillment { get; set; }
@@ -28,11 +27,6 @@ public class ApiComponent
         DesignLab = Container.Api.AddComponent(
             "Design Lab",
             "Allows Garment Designers to create visual products (Blueprints), add layers (text/images), configure them, and preview them.",
-            "Spring Boot - Java 24");
-
-        BlueprintManagement = Container.Api.AddComponent(
-            "Blueprint Management",
-            "Handles reusable design blueprints: save, load, publish, duplicate, rename, and delete.",
             "Spring Boot - Java 24");
 
         ProductCatalog = Container.Api.AddComponent(
@@ -74,16 +68,12 @@ public class ApiComponent
     public void Generate()
     {
         // Internal RESTful routes
-        DesignLab.Uses(BlueprintManagement, "Calls /api/blueprints");
         DesignLab.Uses(UserManagement, "Calls /api/users/current");
         DesignLab.Uses(Shared, "Calls /api/shared/design");
-
-        BlueprintManagement.Uses(Shared, "Calls /api/shared/blueprints");
 
         ProductCatalog.Uses(Shared, "Calls /api/shared/products");
         ProductCatalog.Uses(Context.Cloudinary, "Calls Cloudinary API");
         DesignLab.Uses(Context.Cloudinary, "Calls Cloudinary API");
-        BlueprintManagement.Uses(Context.Cloudinary, "Calls Cloudinary API");
 
         OrderProcessing.Uses(ProductCatalog, "Calls /api/products");
         OrderProcessing.Uses(UserManagement, "Calls /api/users/{id}");
@@ -101,7 +91,6 @@ public class ApiComponent
         AccessAndSecurity.Uses(UserManagement, "Calls /api/users/validate");
 
         // Supabase usage for persistence
-        BlueprintManagement.Uses(Context.Supabase, "Stores blueprint metadata", "SQL via Supabase");
         ProductCatalog.Uses(Context.Supabase, "Reads catalog", "SQL via Supabase");
         OrderProcessing.Uses(Context.Supabase, "Stores order state", "SQL via Supabase");
         OrderFulfillment.Uses(Context.Supabase, "Reads logistics data", "SQL via Supabase");
